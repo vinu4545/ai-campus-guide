@@ -1,6 +1,6 @@
 import { Bot, Sparkles } from "lucide-react";
 import { Copilot } from "@/components/copilot/Copilot";
-import lokmanyaLogo from "../components/Images/Screenshot from 2026-05-04 01-36-19.png";
+import lokmanyaLogo from "../components/Images/Image_URL.png";
 
 const Index = () => {
   return (
@@ -31,7 +31,7 @@ const Index = () => {
             <span>Powered by AI · Built for Students</span>
           </div>
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-5">
-            <span className="gradient-text">Lokmanya College Admission Guide</span>
+            <span className="gradient-text">Lokmanya College</span>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-10">
             Get instant guidance on courses, admissions, fees, and deadlines. Tap the assistant in the corner to start chatting with Lokmanya College support.

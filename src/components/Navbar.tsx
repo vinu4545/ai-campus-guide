@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import lokmanyaLogo from "./Images/Screenshot from 2026-05-04 01-36-19.png";
+import lokmanyaLogo from "./Images/Image_URL.png";
 
 const links = [
   { to: "/", label: "Home" },
