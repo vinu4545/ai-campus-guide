@@ -81,7 +81,7 @@ export const Copilot = () => {
         <button
           onClick={() => setOpen(true)}
           aria-label="Open Copilot"
-          className="fixed bottom-6 right-6 z-50 group transition-all duration-300 ease-out hover:scale-105 active:scale-95 animate-fade-in"
+          className="fixed bottom-14 right-14 z-50 group transition-all duration-300 ease-out hover:scale-105 active:scale-95 animate-fade-in"
         >
           <span className="absolute inset-0 rounded-full bg-[linear-gradient(135deg,#1e3c72,#2a5298)] blur-2xl opacity-40 group-hover:opacity-70 transition-all duration-300" />
           <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-[linear-gradient(135deg,#1e3c72,#2a5298)] text-white shadow-[0_16px_40px_rgba(30,60,114,0.35)] transition-transform duration-300 group-hover:scale-110">
