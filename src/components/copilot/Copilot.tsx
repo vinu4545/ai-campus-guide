@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Bot, X, Send, Sparkles, ArrowLeftRight, Minimize2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Markdown } from "./Markdown";
@@ -23,7 +23,7 @@ export const Copilot = () => {
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -65,9 +65,6 @@ export const Copilot = () => {
         { id: crypto.randomUUID(), role: "assistant", content: reply.markdown, quickReplies: reply.quickReplies },
       ]);
       setTyping(false);
-      if (reply.navigate) {
-        setTimeout(() => navigate(reply.navigate!), 600);
-      }
     }, 700 + Math.random() * 500);
   };
 
