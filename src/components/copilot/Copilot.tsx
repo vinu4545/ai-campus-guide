@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Bot, X, Send, Sparkles, ArrowLeftRight, Minimize2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Markdown } from "./Markdown";
@@ -18,12 +18,12 @@ const STORAGE_KEY = "novacopilot:history";
 export const Copilot = () => {
   const [open, setOpen] = useState(false);
   const [side, setSide] = useState<"right" | "left">("right");
-  const [width, setWidth] = useState(420);
+  const [width, setWidth] = useState(typeof window !== "undefined" ? Math.min(820, Math.round(window.innerWidth * 0.65)) : 720);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -65,9 +65,6 @@ export const Copilot = () => {
         { id: crypto.randomUUID(), role: "assistant", content: reply.markdown, quickReplies: reply.quickReplies },
       ]);
       setTyping(false);
-      if (reply.navigate) {
-        setTimeout(() => navigate(reply.navigate!), 600);
-      }
     }, 700 + Math.random() * 500);
   };
 
@@ -232,7 +229,7 @@ export const Copilot = () => {
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask NovaCopilot anything..."
+                placeholder="Ask about admissions, courses, fees..."
                 className="flex-1 bg-transparent outline-none text-sm placeholder:text-muted-foreground"
               />
               <Button
