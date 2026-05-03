@@ -229,7 +229,7 @@ export const Copilot = () => {
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask NovaCopilot anything..."
+                placeholder="Ask about admissions, courses, fees..."
                 className="flex-1 bg-transparent outline-none text-sm placeholder:text-muted-foreground"
               />
               <Button
