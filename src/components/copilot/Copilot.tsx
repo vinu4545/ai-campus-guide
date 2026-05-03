@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Bot, RotateCcw, X, Send, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -34,10 +35,12 @@ const getInitialMessages = (): Msg[] => [
 export const Copilot = () => {
   const [open, setOpen] = useState(false);
   const [imagePreviewOpen, setImagePreviewOpen] = useState(false);
+  const [panelMounted, setPanelMounted] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -52,6 +55,37 @@ export const Copilot = () => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, typing]);
 
+  useEffect(() => {
+    if (open) {
+      if (closeTimerRef.current) {
+        window.clearTimeout(closeTimerRef.current);
+        closeTimerRef.current = null;
+      }
+      setPanelMounted(true);
+      return;
+    }
+
+    if (!panelMounted) return;
+
+    closeTimerRef.current = window.setTimeout(() => {
+      setPanelMounted(false);
+      closeTimerRef.current = null;
+    }, 300);
+
+    return () => {
+      if (closeTimerRef.current) {
+        window.clearTimeout(closeTimerRef.current);
+        closeTimerRef.current = null;
+      }
+    };
+  }, [open, panelMounted]);
+const closePanel = () => {
+    setOpen(false);
+  };
+
+  const panelVisible = open;
+
+  
   const send = (text: string) => {
     const trimmed = text.trim();
     if (!trimmed) return;
@@ -76,7 +110,7 @@ export const Copilot = () => {
     setMessages(getInitialMessages());
   };
 
-  return (
+  const portalContent = (
     <>
       {/* Floating button */}
       {!open && (
@@ -97,17 +131,23 @@ export const Copilot = () => {
       {open && (
         <div
           className="fixed inset-0 z-40 bg-black/15 backdrop-blur-[2px] animate-fade-in"
-          onClick={() => setOpen(false)}
+          onClick={closePanel}
         />
       )}
 
       {/* Panel */}
-      {open && (
+      {panelMounted && (
         <aside
           className={cn(
-            "fixed bottom-6 right-6 z-50 flex flex-col overflow-hidden rounded-[20px] bg-white shadow-[0_20px_60px_rgba(15,23,42,0.22)] ring-1 ring-black/5 animate-fade-in md:top-1/2 md:-translate-y-1/2 md:bottom-auto",
-            "w-[min(390px,calc(100vw-1.5rem))] h-[min(560px,calc(100vh-1.5rem))]"
+            "fixed bottom-6 right-6 z-50 flex flex-col overflow-hidden rounded-[20px] bg-white shadow-[0_20px_60px_rgba(15,23,42,0.22)] ring-1 ring-black/5",
+            "w-[min(420px,calc(100vw-32px))] max-h-[calc(100vh-32px)]"
           )}
+          style={{
+            opacity: panelVisible ? 1 : 0,
+            transform: panelVisible ? "translateX(0) translateY(0)" : "translateX(20px) translateY(10px)",
+            pointerEvents: panelVisible ? "auto" : "none",
+            transition: "transform 0.3s ease, opacity 0.3s ease",
+          }}
         >
 
           {/* Header */}
@@ -260,4 +300,6 @@ export const Copilot = () => {
       )}
     </>
   );
+
+  return createPortal(portalContent, document.body);
 };
