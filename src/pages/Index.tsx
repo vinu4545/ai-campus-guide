@@ -1,5 +1,6 @@
 import { Bot, Sparkles } from "lucide-react";
 import { Copilot } from "@/components/copilot/Copilot";
+import lokmanyaLogo from "../components/Images/Screenshot from 2026-05-04 01-36-19.png";
 
 const Index = () => {
   return (
@@ -7,11 +8,13 @@ const Index = () => {
       {/* Logo header */}
       <header className="w-full px-6 py-5 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-gradient-primary flex items-center justify-center btn-glow">
-            <Bot className="w-5 h-5 text-primary-foreground" />
-          </div>
-          <span className="font-semibold text-lg tracking-tight">
-            Nova<span className="gradient-text">Copilot</span>
+          <img
+            src={lokmanyaLogo}
+            alt="Lokmanya College logo"
+            className="h-12 w-auto rounded-xl bg-white/90 px-1 py-0.5 object-contain shadow-sm"
+          />
+          <span className="font-semibold text-lg tracking-tight text-foreground">
+            Lokmanya <span className="gradient-text">College</span>
           </span>
         </div>
         <span className="hidden sm:inline-flex items-center gap-1.5 text-xs text-muted-foreground px-3 py-1.5 rounded-full border border-border bg-white/60">
@@ -28,10 +31,10 @@ const Index = () => {
             <span>Powered by AI · Built for Students</span>
           </div>
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-5">
-            Your <span className="gradient-text">College Admission</span><br /> Copilot
+            <span className="gradient-text">Lokmanya College Admission Guide</span>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-10">
-            Get instant guidance on courses, admissions, fees, and deadlines. Tap the assistant in the corner to start chatting.
+            Get instant guidance on courses, admissions, fees, and deadlines. Tap the assistant in the corner to start chatting with Lokmanya College support.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">

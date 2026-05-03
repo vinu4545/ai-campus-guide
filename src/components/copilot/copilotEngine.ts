@@ -18,7 +18,7 @@ export function getCopilotReply(input: string): CopilotResponse {
 
   if (/(hi|hello|hey|start)/.test(q)) {
     return {
-      markdown: `### 👋 Hi there!\nI'm **NovaCopilot**, your AI admissions assistant. I can help you with:\n- 🎓 Course discovery\n- 📝 Admission process\n- 💰 Fees & scholarships\n- 📅 Deadlines\n\nWhat would you like to explore?`,
+      markdown: `### 👋 Hi there!\nI'm **Lokmanya College**, your AI admissions assistant. I can help you with:\n- 🎓 Course discovery\n- 📝 Admission process\n- 💰 Fees & scholarships\n- 📅 Deadlines\n\nWhat would you like to explore?`,
       quickReplies: [
         { label: "Best course for AI", query: "Which course is best for AI?" },
         { label: "How to apply", query: "What is the admission process?" },

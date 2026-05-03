@@ -1,7 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
-import { GraduationCap, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import lokmanyaLogo from "./Images/Screenshot from 2026-05-04 01-36-19.png";
 
 const links = [
   { to: "/", label: "Home" },
@@ -18,11 +19,13 @@ export const Navbar = () => {
     <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-background/70 border-b border-border/50">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-primary flex items-center justify-center btn-glow group-hover:scale-110 transition-transform">
-            <GraduationCap className="w-5 h-5 text-primary-foreground" />
-          </div>
-          <span className="font-bold text-lg tracking-tight">
-            Nova<span className="gradient-text">Edu</span>
+          <img
+            src={lokmanyaLogo}
+            alt="Lokmanya College logo"
+            className="h-10 w-auto rounded-xl bg-white/90 px-1 py-0.5 object-contain shadow-sm group-hover:scale-105 transition-transform"
+          />
+          <span className="font-bold text-lg tracking-tight text-foreground">
+            Lokmanya <span className="gradient-text">College</span>
           </span>
         </Link>
 

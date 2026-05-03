@@ -13,7 +13,7 @@ type Msg = {
   quickReplies?: QuickReply[];
 };
 
-const STORAGE_KEY = "novacopilot:history";
+const STORAGE_KEY = "lokmanya-college:history";
 
 export const Copilot = () => {
   const [open, setOpen] = useState(false);
@@ -35,7 +35,7 @@ export const Copilot = () => {
         id: "welcome",
         role: "assistant",
         content:
-          "### 👋 Welcome to **NovaCopilot**\nI'm your AI admissions assistant. Ask me anything about courses, fees, or how to apply.",
+          "### 👋 Welcome to **Lokmanya College**\nI'm your AI admissions assistant. Ask me anything about courses, fees, or how to apply.",
         quickReplies: [
           { label: "Best course for AI", query: "Which course is best for AI?" },
           { label: "Admission steps", query: "admission process" },
@@ -139,7 +139,7 @@ export const Copilot = () => {
               </div>
               <div>
                 <div className="font-semibold text-sm flex items-center gap-1.5">
-                  NovaCopilot
+                  Lokmanya College
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 </div>
                 <div className="text-[11px] text-muted-foreground">AI admissions assistant</div>
@@ -242,7 +242,7 @@ export const Copilot = () => {
               </Button>
             </div>
             <p className="text-[10px] text-muted-foreground mt-2 text-center">
-              Simulated AI · Powered by NovaEdu
+              Simulated AI · Powered by Lokmanya College
             </p>
           </form>
         </aside>

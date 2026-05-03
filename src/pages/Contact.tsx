@@ -9,15 +9,15 @@ const Contact = () => (
     <div className="max-w-2xl mb-10 animate-fade-in">
       <div className="text-xs uppercase tracking-wider text-primary mb-2">Contact</div>
       <h1 className="text-4xl md:text-5xl font-bold mb-3">Get in <span className="gradient-text">touch</span></h1>
-      <p className="text-muted-foreground">We'll get back to you within 24 hours. Or ask NovaCopilot for instant answers.</p>
+      <p className="text-muted-foreground">We'll get back to you within 24 hours. Or ask Lokmanya College for instant answers.</p>
     </div>
 
     <div className="grid lg:grid-cols-3 gap-6">
       <div className="space-y-4">
         {[
-          { icon: Mail, label: "Email", value: "admissions@novaedu.ai" },
+          { icon: Mail, label: "Email", value: "admissions@lokmanyacollege.edu" },
           { icon: Phone, label: "Phone", value: "+1 (555) 010-2030" },
-          { icon: MapPin, label: "Campus", value: "1 Innovation Way, San Francisco" },
+          { icon: MapPin, label: "Campus", value: "Lokmanya College Campus" },
         ].map((c) => (
           <div key={c.label} className="glass rounded-2xl p-5 flex items-start gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-primary flex items-center justify-center btn-glow shrink-0">

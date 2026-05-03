@@ -13,7 +13,7 @@ const About = () => (
       <div className="text-xs uppercase tracking-wider text-primary mb-2">About</div>
       <h1 className="text-4xl md:text-5xl font-bold mb-4">A college built for the <span className="gradient-text">future of learning</span></h1>
       <p className="text-muted-foreground text-lg">
-        NovaEdu is an AI-first institution combining world-class faculty, modern infrastructure, and a deep belief in personalized education.
+        Lokmanya College is a student-first institution combining strong faculty, modern infrastructure, and a deep belief in personalized education.
       </p>
     </section>
 

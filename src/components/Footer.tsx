@@ -9,9 +9,9 @@ export const Footer = () => (
           <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
             <GraduationCap className="w-4 h-4 text-primary-foreground" />
           </div>
-          <span className="font-bold">Nova<span className="gradient-text">Edu</span></span>
+          <span className="font-bold">Lokmanya <span className="gradient-text">College</span></span>
         </div>
-        <p className="text-sm text-muted-foreground">AI-powered smart admissions for the next generation.</p>
+        <p className="text-sm text-muted-foreground">Student-first admissions guidance for the next generation.</p>
       </div>
       <div>
         <h4 className="font-semibold mb-3">Explore</h4>
@@ -32,13 +32,13 @@ export const Footer = () => (
       <div>
         <h4 className="font-semibold mb-3">Contact</h4>
         <ul className="space-y-2 text-sm text-muted-foreground">
-          <li>admissions@novaedu.ai</li>
+          <li>admissions@lokmanyacollege.edu</li>
           <li>+1 (555) 010-2030</li>
         </ul>
       </div>
     </div>
     <div className="border-t border-border/50 py-6 text-center text-xs text-muted-foreground">
-      © {new Date().getFullYear()} NovaEdu. Powered by AI.
+      © {new Date().getFullYear()} Lokmanya College. Powered by AI.
     </div>
   </footer>
 );
