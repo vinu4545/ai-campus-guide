@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, Bot, X, Send, Sparkles } from "lucide-react";
+import { Bot, RotateCcw, X, Send, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,21 @@ type Msg = {
 
 const STORAGE_KEY = "lokmanya-college:history";
 
+const getInitialMessages = (): Msg[] => [
+  {
+    id: "welcome",
+    role: "assistant",
+    content:
+      "### 👋 Welcome to **Lokmanya College**\nI'm your AI admissions assistant. Ask me anything about courses, fees, or how to apply.",
+    quickReplies: [
+      { label: "Best course for AI", query: "Which course is best for AI?" },
+      { label: "Admission steps", query: "admission process" },
+      { label: "Fees", query: "fees" },
+      { label: "Deadlines", query: "deadlines" },
+    ],
+  },
+];
+
 export const Copilot = () => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
@@ -28,20 +43,7 @@ export const Copilot = () => {
     if (stored) {
       try { setMessages(JSON.parse(stored)); return; } catch {}
     }
-    setMessages([
-      {
-        id: "welcome",
-        role: "assistant",
-        content:
-          "### 👋 Welcome to **Lokmanya College**\nI'm your AI admissions assistant. Ask me anything about courses, fees, or how to apply.",
-        quickReplies: [
-          { label: "Best course for AI", query: "Which course is best for AI?" },
-          { label: "Admission steps", query: "admission process" },
-          { label: "Fees", query: "fees" },
-          { label: "Deadlines", query: "deadlines" },
-        ],
-      },
-    ]);
+    setMessages(getInitialMessages());
   }, []);
 
   useEffect(() => {
@@ -64,6 +66,12 @@ export const Copilot = () => {
       ]);
       setTyping(false);
     }, 700 + Math.random() * 500);
+  };
+
+  const resetChat = () => {
+    setInput("");
+    setTyping(false);
+    setMessages(getInitialMessages());
   };
 
   return (
@@ -103,11 +111,12 @@ export const Copilot = () => {
           {/* Header */}
           <div className="flex items-center justify-between gap-3 bg-[linear-gradient(135deg,#1e3c72,#2a5298)] px-4 py-4 text-white shadow-sm">
             <button
-              onClick={() => setOpen(false)}
+              onClick={resetChat}
               className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20"
-              aria-label="Back"
+              aria-label="Reset chat"
+              title="Reset chat"
             >
-              <ArrowLeft className="h-4 w-4" />
+              <RotateCcw className="h-4 w-4" />
             </button>
             <div className="flex-1 text-center">
               <div className="text-[15px] font-semibold tracking-wide">Chat with us</div>
