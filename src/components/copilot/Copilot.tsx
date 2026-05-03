@@ -18,7 +18,7 @@ const STORAGE_KEY = "novacopilot:history";
 export const Copilot = () => {
   const [open, setOpen] = useState(false);
   const [side, setSide] = useState<"right" | "left">("right");
-  const [width, setWidth] = useState(420);
+  const [width, setWidth] = useState(typeof window !== "undefined" ? Math.min(820, Math.round(window.innerWidth * 0.65)) : 720);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);

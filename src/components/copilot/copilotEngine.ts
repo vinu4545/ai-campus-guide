@@ -74,18 +74,6 @@ export function getCopilotReply(input: string): CopilotResponse {
     };
   }
 
-  if (/go to courses|open courses/.test(q)) {
-    return { markdown: `Opening **Courses** page... 🚀`, navigate: "/courses" };
-  }
-  if (/go to admissions|open admissions/.test(q)) {
-    return { markdown: `Taking you to **Admissions**... 📝`, navigate: "/admissions" };
-  }
-  if (/dashboard/.test(q)) {
-    return { markdown: `Opening your **Dashboard**...`, navigate: "/dashboard" };
-  }
-  if (/contact/.test(q)) {
-    return { markdown: `Opening **Contact**...`, navigate: "/contact" };
-  }
 
   if (/(faculty|teacher|professor)/.test(q)) {
     return {
