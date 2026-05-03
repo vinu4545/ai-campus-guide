@@ -95,8 +95,8 @@ export const Copilot = () => {
       {open && (
         <aside
           className={cn(
-            "fixed bottom-6 right-6 z-50 flex flex-col overflow-hidden rounded-[20px] bg-white shadow-[0_20px_60px_rgba(15,23,42,0.22)] ring-1 ring-black/5 animate-fade-in",
-            "w-[min(350px,calc(100vw-1.5rem))] h-[min(500px,calc(100vh-1.5rem))]"
+            "fixed bottom-6 right-6 z-50 flex flex-col overflow-hidden rounded-[20px] bg-white shadow-[0_20px_60px_rgba(15,23,42,0.22)] ring-1 ring-black/5 animate-fade-in md:top-1/2 md:-translate-y-1/2 md:bottom-auto",
+            "w-[min(390px,calc(100vw-1.5rem))] h-[min(560px,calc(100vh-1.5rem))]"
           )}
         >
 
