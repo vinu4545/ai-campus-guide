@@ -33,6 +33,7 @@ const getInitialMessages = (): Msg[] => [
 
 export const Copilot = () => {
   const [open, setOpen] = useState(false);
+  const [imagePreviewOpen, setImagePreviewOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
@@ -71,6 +72,7 @@ export const Copilot = () => {
   const resetChat = () => {
     setInput("");
     setTyping(false);
+    setImagePreviewOpen(false);
     setMessages(getInitialMessages());
   };
 
@@ -150,11 +152,18 @@ export const Copilot = () => {
                   >
                     {m.role === "assistant" ? <Markdown text={m.content} /> : <p className="text-sm">{m.content}</p>}
                     {m.id === "welcome" && m.role === "assistant" && (
-                      <img
-                        src={collegeImage}
-                        alt="Lokmanya College"
-                        className="mt-3 w-full rounded-xl object-cover"
-                      />
+                      <button
+                        type="button"
+                        onClick={() => setImagePreviewOpen(true)}
+                        className="mt-3 block w-full overflow-hidden rounded-xl border border-white/60 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                        aria-label="Open college image preview"
+                      >
+                        <img
+                          src={collegeImage}
+                          alt="Lokmanya College"
+                          className="h-auto w-full rounded-xl object-cover"
+                        />
+                      </button>
                     )}
                     {m.quickReplies && (
                       <div className="mt-3 flex flex-wrap gap-2">
@@ -215,6 +224,39 @@ export const Copilot = () => {
             </p>
           </form>
         </aside>
+      )}
+
+      {open && imagePreviewOpen && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/55 px-4 backdrop-blur-sm animate-fade-in"
+          onClick={() => setImagePreviewOpen(false)}
+        >
+          <div
+            className="w-full max-w-[420px] overflow-hidden rounded-[22px] bg-white shadow-[0_24px_80px_rgba(15,23,42,0.35)] ring-1 ring-black/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-slate-200 bg-[linear-gradient(135deg,#1e3c72,#2a5298)] px-4 py-3 text-white">
+              <div className="text-sm font-semibold">Lokmanya College</div>
+              <button
+                type="button"
+                onClick={() => setImagePreviewOpen(false)}
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20"
+                aria-label="Close image preview"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <div className="bg-[#f6f8fc] p-4">
+              <div className="overflow-hidden rounded-[18px] bg-white p-2 shadow-sm ring-1 ring-slate-200">
+                <img
+                  src={collegeImage}
+                  alt="Lokmanya College"
+                  className="w-full rounded-[12px] object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
