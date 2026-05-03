@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { Bot, X, Send, Sparkles, ArrowLeftRight, Minimize2 } from "lucide-react";
+import { ArrowLeft, Bot, X, Send, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Markdown } from "./Markdown";
 import { getCopilotReply, QuickReply } from "./copilotEngine";
+import collegeImage from "../Images/college_Image.webp";
 
 type Msg = {
   id: string;
@@ -17,13 +18,10 @@ const STORAGE_KEY = "lokmanya-college:history";
 
 export const Copilot = () => {
   const [open, setOpen] = useState(false);
-  const [side, setSide] = useState<"right" | "left">("right");
-  const [width, setWidth] = useState(typeof window !== "undefined" ? Math.min(820, Math.round(window.innerWidth * 0.65)) : 720);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -68,25 +66,6 @@ export const Copilot = () => {
     }, 700 + Math.random() * 500);
   };
 
-  // Resizing
-  const dragRef = useRef<{ startX: number; startW: number } | null>(null);
-  const onDragStart = (e: React.MouseEvent) => {
-    dragRef.current = { startX: e.clientX, startW: width };
-    window.addEventListener("mousemove", onDragMove);
-    window.addEventListener("mouseup", onDragEnd);
-  };
-  const onDragMove = (e: MouseEvent) => {
-    if (!dragRef.current) return;
-    const delta = side === "right" ? dragRef.current.startX - e.clientX : e.clientX - dragRef.current.startX;
-    const next = Math.min(720, Math.max(340, dragRef.current.startW + delta));
-    setWidth(next);
-  };
-  const onDragEnd = () => {
-    dragRef.current = null;
-    window.removeEventListener("mousemove", onDragMove);
-    window.removeEventListener("mouseup", onDragEnd);
-  };
-
   return (
     <>
       {/* Floating button */}
@@ -94,10 +73,10 @@ export const Copilot = () => {
         <button
           onClick={() => setOpen(true)}
           aria-label="Open Copilot"
-          className="fixed bottom-6 right-6 z-50 group"
+          className="fixed bottom-6 right-6 z-50 group transition-all duration-300 ease-out hover:scale-105 active:scale-95 animate-fade-in"
         >
-          <span className="absolute inset-0 rounded-full bg-gradient-primary blur-xl opacity-60 group-hover:opacity-90 transition" />
-          <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-gradient-primary animate-pulse-glow text-primary-foreground transition-transform group-hover:scale-110">
+          <span className="absolute inset-0 rounded-full bg-[linear-gradient(135deg,#1e3c72,#2a5298)] blur-2xl opacity-40 group-hover:opacity-70 transition-all duration-300" />
+          <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-[linear-gradient(135deg,#1e3c72,#2a5298)] text-white shadow-[0_16px_40px_rgba(30,60,114,0.35)] transition-transform duration-300 group-hover:scale-110">
             <Bot className="w-7 h-7" />
             <Sparkles className="w-3.5 h-3.5 absolute top-3 right-3 animate-pulse" />
           </span>
@@ -107,7 +86,7 @@ export const Copilot = () => {
       {/* Overlay */}
       {open && (
         <div
-          className="fixed inset-0 z-40 bg-background/40 backdrop-blur-sm animate-fade-in md:bg-background/20"
+          className="fixed inset-0 z-40 bg-black/15 backdrop-blur-[2px] animate-fade-in"
           onClick={() => setOpen(false)}
         />
       )}
@@ -116,104 +95,86 @@ export const Copilot = () => {
       {open && (
         <aside
           className={cn(
-            "fixed top-0 z-50 h-screen flex flex-col glass border-l border-border/60 shadow-2xl",
-            side === "right" ? "right-0 animate-slide-in-right" : "left-0 animate-slide-in-left",
-            "w-full md:w-auto"
+            "fixed bottom-6 right-6 z-50 flex flex-col overflow-hidden rounded-[20px] bg-white shadow-[0_20px_60px_rgba(15,23,42,0.22)] ring-1 ring-black/5 animate-fade-in",
+            "w-[min(350px,calc(100vw-1.5rem))] h-[min(500px,calc(100vh-1.5rem))]"
           )}
-          style={{ maxWidth: "100vw", width: typeof window !== "undefined" && window.innerWidth >= 768 ? width : "100%" }}
         >
-          {/* Drag handle */}
-          <div
-            onMouseDown={onDragStart}
-            className={cn(
-              "hidden md:block absolute top-0 h-full w-1.5 cursor-col-resize hover:bg-primary/40 transition-colors",
-              side === "right" ? "left-0" : "right-0"
-            )}
-          />
 
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-border/60 bg-background/50">
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-lg bg-gradient-primary flex items-center justify-center btn-glow">
-                <Bot className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <div>
-                <div className="font-semibold text-sm flex items-center gap-1.5">
-                  Lokmanya College
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                </div>
-                <div className="text-[11px] text-muted-foreground">AI admissions assistant</div>
-              </div>
+          <div className="flex items-center justify-between gap-3 bg-[linear-gradient(135deg,#1e3c72,#2a5298)] px-4 py-4 text-white shadow-sm">
+            <button
+              onClick={() => setOpen(false)}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20"
+              aria-label="Back"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+            <div className="flex-1 text-center">
+              <div className="text-[15px] font-semibold tracking-wide">Chat with us</div>
             </div>
-            <div className="flex items-center gap-1">
-              <button
-                onClick={() => setSide(side === "right" ? "left" : "right")}
-                className="p-2 rounded-md hover:bg-secondary transition"
-                aria-label="Switch side"
-                title="Move panel"
-              >
-                <ArrowLeftRight className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setOpen(false)}
-                className="p-2 rounded-md hover:bg-secondary transition md:hidden"
-                aria-label="Minimize"
-              >
-                <Minimize2 className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setOpen(false)}
-                className="p-2 rounded-md hover:bg-destructive/20 hover:text-destructive transition"
-                aria-label="Close"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
+            <button
+              onClick={() => setOpen(false)}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20"
+              aria-label="Close"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </div>
 
           {/* Messages */}
-          <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+          <div ref={scrollRef} className="flex-1 overflow-y-auto bg-[#f6f8fc] px-3 py-4">
             {messages.map((m) => (
-              <div key={m.id} className={cn("flex gap-2 animate-fade-in", m.role === "user" && "justify-end")}>
-                {m.role === "assistant" && (
-                  <div className="w-7 h-7 shrink-0 rounded-md bg-gradient-primary flex items-center justify-center mt-0.5">
-                    <Bot className="w-4 h-4 text-primary-foreground" />
-                  </div>
-                )}
-                <div
-                  className={cn(
-                    "max-w-[85%] rounded-2xl px-3.5 py-2.5",
-                    m.role === "user"
-                      ? "bg-gradient-primary text-primary-foreground rounded-tr-sm"
-                      : "bg-secondary/70 border border-border/60 rounded-tl-sm"
-                  )}
-                >
-                  {m.role === "assistant" ? <Markdown text={m.content} /> : <p className="text-sm">{m.content}</p>}
-                  {m.quickReplies && (
-                    <div className="flex flex-wrap gap-1.5 mt-3">
-                      {m.quickReplies.map((q) => (
-                        <button
-                          key={q.label}
-                          onClick={() => send(q.query)}
-                          className="text-xs px-2.5 py-1 rounded-full border border-primary/40 text-primary hover:bg-primary/10 transition"
-                        >
-                          {q.label}
-                        </button>
-                      ))}
+              <div key={m.id} className={cn("mb-3 flex animate-fade-in", m.role === "user" ? "justify-end" : "justify-start")}>
+                <div className={cn("flex max-w-[86%] gap-2", m.role === "user" && "flex-row-reverse")}> 
+                  {m.role === "assistant" && (
+                    <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-slate-200">
+                      <Bot className="h-4.5 w-4.5 text-[#2a5298]" />
                     </div>
                   )}
+                  <div
+                    className={cn(
+                      "rounded-2xl px-4 py-3 text-sm leading-6 shadow-sm transition-all duration-200",
+                      m.role === "user"
+                        ? "rounded-tr-md bg-[linear-gradient(135deg,#1e3c72,#2a5298)] text-white"
+                        : "rounded-tl-md bg-[#f1f3f8] text-slate-700 ring-1 ring-slate-200"
+                    )}
+                  >
+                    {m.role === "assistant" ? <Markdown text={m.content} /> : <p className="text-sm">{m.content}</p>}
+                    {m.id === "welcome" && m.role === "assistant" && (
+                      <img
+                        src={collegeImage}
+                        alt="Lokmanya College"
+                        className="mt-3 w-full rounded-xl object-cover"
+                      />
+                    )}
+                    {m.quickReplies && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {m.quickReplies.map((q) => (
+                          <button
+                            key={q.label}
+                            onClick={() => send(q.query)}
+                            className="rounded-full border border-[#d6dbea] bg-white px-3 py-1.5 text-xs font-medium text-[#1e3c72] transition hover:-translate-y-0.5 hover:border-[#9bb3df] hover:shadow-sm"
+                          >
+                            {q.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
             {typing && (
-              <div className="flex gap-2 animate-fade-in">
-                <div className="w-7 h-7 shrink-0 rounded-md bg-gradient-primary flex items-center justify-center">
-                  <Bot className="w-4 h-4 text-primary-foreground" />
-                </div>
-                <div className="bg-secondary/70 border border-border/60 rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-blink" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-blink" style={{ animationDelay: "0.2s" }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-blink" style={{ animationDelay: "0.4s" }} />
+              <div className="mb-3 flex animate-fade-in justify-start">
+                <div className="flex max-w-[86%] gap-2">
+                  <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-slate-200">
+                    <Bot className="h-4.5 w-4.5 text-[#2a5298]" />
+                  </div>
+                  <div className="flex items-center gap-1.5 rounded-2xl rounded-tl-md bg-[#f1f3f8] px-4 py-3 shadow-sm ring-1 ring-slate-200">
+                    <span className="h-2 w-2 rounded-full bg-[#2a5298] animate-blink" />
+                    <span className="h-2 w-2 rounded-full bg-[#2a5298] animate-blink" style={{ animationDelay: "0.2s" }} />
+                    <span className="h-2 w-2 rounded-full bg-[#2a5298] animate-blink" style={{ animationDelay: "0.4s" }} />
+                  </div>
                 </div>
               </div>
             )}
@@ -222,27 +183,26 @@ export const Copilot = () => {
           {/* Input */}
           <form
             onSubmit={(e) => { e.preventDefault(); send(input); }}
-            className="border-t border-border/60 p-3 bg-background/50"
+            className="border-t border-slate-200 bg-white px-3 py-3"
           >
-            <div className="flex items-center gap-2 bg-secondary/70 border border-border/60 rounded-xl px-3 py-2 focus-within:border-primary/60 transition">
-              <Sparkles className="w-4 h-4 text-primary shrink-0" />
+            <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-[#f8faff] px-3 py-2.5 shadow-sm transition focus-within:border-[#9bb3df]">
+              <Sparkles className="w-4 h-4 shrink-0 text-[#2a5298]" />
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about admissions, courses, fees..."
-                className="flex-1 bg-transparent outline-none text-sm placeholder:text-muted-foreground"
+                className="flex-1 bg-transparent outline-none text-sm text-slate-700 placeholder:text-slate-400"
               />
               <Button
                 type="submit"
-                size="sm"
                 disabled={!input.trim()}
-                className="bg-gradient-primary border-0 h-8 px-3"
+                className="h-9 rounded-xl border-0 bg-[linear-gradient(135deg,#1e3c72,#2a5298)] px-4 text-white shadow-md transition hover:opacity-95"
               >
                 <Send className="w-3.5 h-3.5" />
               </Button>
             </div>
-            <p className="text-[10px] text-muted-foreground mt-2 text-center">
-              Simulated AI · Powered by Lokmanya College
+            <p className="mt-2 text-center text-[10px] text-slate-500">
+              Powered by Lokmanya College AI
             </p>
           </form>
         </aside>
